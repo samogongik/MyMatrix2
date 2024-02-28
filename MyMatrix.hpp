@@ -125,7 +125,7 @@ public:
         MyMatrix result(m, n);
         for (size_t i = 0; i < m; i++) {
             for(size_t j = 0; j < n; j++){
-                result[i][j] = arr[i][j] + rhs[i][j];
+                result[i][j] = (*this)[i][j] + rhs[i][j];
             }
         }
         return result;
@@ -135,7 +135,7 @@ public:
         MyMatrix<T> result(m,n);
         for (int i = 0; i < m; i++){
             for(int j = 0; j < n; j++){
-                result[i][j] = -arr[i][j];
+                result[i][j] = -(*this)[i][j];
             }
         }
 
@@ -155,20 +155,20 @@ public:
         MyMatrix result(m, n);
         for (size_t i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                result[i][j] = arr[i][j] * num;
+                result[i][j] = (*this)[i][j] * num;
             }
         }
         return result;
     }
 
-    MyMatrix transpoce_matrix(const MyMatrix& matrix){
-        size_t matrix_rows = matrix.count_rows();
-        size_t matrix_columns = matrix.count_columns();
+    MyMatrix transpoce_matrix() const {
+        size_t matrix_rows = (*this).count_rows();
+        size_t matrix_columns = (*this).count_columns();
 
         MyMatrix<T> transpoced(matrix_columns, matrix_rows);
         for (int i = 0; i < matrix_rows; i++){
             for (int j = 0; j < matrix_columns; j++){
-                transpoced[j][i] = matrix[i][j];
+                transpoced[j][i] = (*this)[i][j];
             }
         }
 
@@ -181,15 +181,15 @@ public:
         }
 
         MyMatrix<T> result(m, rhs.n);
-        MyMatrix<T> rhs_copy = rhs;
-        MyMatrix<T> trancpoced = transpoce_matrix(rhs_copy);
+        MyMatrix<T> rhs_copy = rhs.transpoce_matrix();
+        ;
 
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < rhs.n; j++) {
 
                 double now = 0;
                 for (int k = 0; k < n; k++) {
-                    now += arr[i][k] * trancpoced[j][k];
+                    now += (*this)[i][k] * rhs[j][k];
                 }
                 result[i][j] = now;
             }
@@ -198,11 +198,11 @@ public:
         return result;
     }
 
-    double determinant(const MyMatrix& matrix) const {
-        if (matrix.n == 0){
+    double determinant() const {
+        if ((*this).n == 0){
             return 0;
         }
-        if (matrix.n != matrix.m) {
+        if ((*this).n != (*this).m) {
             throw std::runtime_error ("Attempt to calculate the determinant of a non-square matrix");
         }
 
@@ -210,17 +210,17 @@ public:
         double det = 1.0;
 
         MyMatrix<double> data_copy(m, n);
-        for (int i = 0; i < matrix.m; i++){
-            for (int j = 0; j < matrix.n; j++){
-                data_copy[i][j] = matrix[i][j];;
+        for (int i = 0; i < (*this).m; i++){
+            for (int j = 0; j < (*this).n; j++){
+                data_copy[i][j] = (*this)[i][j];;
             }
         }
 
-        for (int i = 0; i < matrix.n; i++) {
+        for (int i = 0; i < (*this).n; i++) {
             auto max_el = data_copy[i][i];
             int index = i;
 
-            for (int j = i; j < matrix.n; j++) {
+            for (int j = i; j < (*this).n; j++) {
                 if (fabs(data_copy[j][i]) > fabs(max_el)) {
                     max_el = data_copy[j][i];
                     index = j;
@@ -229,17 +229,17 @@ public:
 
             if (index != i) {
                 det = det * (-1);
-                for (int k = 0; k < matrix.n; k++) {
+                for (int k = 0; k < (*this).n; k++) {
                     auto tmp = data_copy[i][k];
                     data_copy[i][k] = data_copy[index][k];
                     data_copy[index][k] = tmp;
                 }
             }
 
-            for (int j = i + 1; j < matrix.n; j++) {
+            for (int j = i + 1; j < (*this).n; j++) {
                 if (fabs(data_copy[i][i]) < 0.000000001 ) return 0.0;
                 auto factor = data_copy[j][i] / data_copy[i][i];
-                for (int k = 0; k < matrix.m; k++) {
+                for (int k = 0; k < (*this).m; k++) {
                     data_copy[j][k] = data_copy[j][k] - data_copy[i][k] * factor;
                 }
             }
@@ -261,9 +261,10 @@ public:
     }
 };
 
-template<numeric_type T>
-MyMatrix<T> operator*(const T &num, const MyMatrix<T> &matrix) {
+template<typename U, numeric_type T>
+MyMatrix<T> operator*(const U &num, const MyMatrix<T> &matrix) {
     MyMatrix<T> result(matrix.count_rows(), matrix.count_columns());
+
     for (size_t i = 0; i < matrix.count_rows(); i++) {
         for(size_t j = 0; j < matrix.count_columns(); j++){
             result[i][j] = matrix[i][j] * num;

@@ -10,7 +10,7 @@ TEST(e2e_test, first_test){
     }
 
     double det_correct = 0;
-    double det = matrix.determinant(matrix);
+    double det = matrix.determinant();
     ASSERT_EQ(det_correct, det) << "Test failed";
 }
 
@@ -23,7 +23,7 @@ TEST(e2e_test, second_test){
     }
 
     double det_correct = 0;
-    double det = matrix.determinant(matrix);
+    double det = matrix.determinant();
     ASSERT_EQ(det_correct, det) << "Test failed";
 }
 
@@ -41,7 +41,7 @@ TEST(e2e_test, thirth_test){
     }
 
     double det_correct = 1;
-    double det = matrix.determinant(matrix);
+    double det = matrix.determinant();
     ASSERT_EQ(det_correct, det) << "Test failed";
 }
 
@@ -52,7 +52,7 @@ TEST(e2e_test, fourth_test){
     matrix[2][0] = 1; matrix[2][1] = 0; matrix[2][2] = 0;
 
     double det_correct = -1;
-    double det = matrix.determinant(matrix);
+    double det = matrix.determinant();
     ASSERT_EQ(det_correct, det) << "Test failed";
 }
 
@@ -63,7 +63,7 @@ TEST(e2e_test, fifth_test){
     matrix[2][0] = 5; matrix[2][1] = 0; matrix[2][2] = 4;
 
     double det_correct = -260;
-    double det = matrix.determinant(matrix);
+    double det = matrix.determinant();
     ASSERT_EQ(det_correct, det) << "Test failed";
 }
 
@@ -74,7 +74,7 @@ TEST(e2e_test, sixth_test){
     matrix[2][0] = 1; matrix[2][1] = 2; matrix[2][2] = 1;
 
     double det_correct = -58;
-    double det = matrix.determinant(matrix);
+    double det = matrix.determinant();
     ASSERT_EQ(det_correct, det) << "Test failed";
 }
 
@@ -85,7 +85,7 @@ TEST(e2e_test, seventh_test){
     matrix[2][0] = 136.8; matrix[2][1] = -12.6; matrix[2][2] = 10.8;
 
     double det_correct = 67001.166;
-    double det = matrix.determinant(matrix);
+    double det = matrix.determinant();
     ASSERT_EQ(det_correct, det) << "Test failed";
 }
 
@@ -96,7 +96,7 @@ TEST(e2e_test, eigth_test){
     matrix[2][0] = 0; matrix[2][1] = 8; matrix[2][2] = 9;
 
     double det_correct = 0;
-    double det = matrix.determinant(matrix);
+    double det = matrix.determinant();
     ASSERT_EQ(det_correct, det) << "Test failed";
 }
 
@@ -107,7 +107,7 @@ TEST(e2e_test, nineth_test){
     matrix[2][0] = 0; matrix[2][1] = 0; matrix[2][2] = 1;
 
     double det_correct = 8;
-    double det = matrix.determinant(matrix);
+    double det = matrix.determinant();
     ASSERT_EQ(det_correct, det) << "Test failed";
 }
 
@@ -118,6 +118,6 @@ TEST(e2e_test, tenth_test){
     matrix[2][0] = 1; matrix[2][1] = 2; matrix[2][2] = 1;
 
     double det_correct = 8;
-    double det = matrix.determinant(matrix);
+    double det = matrix.determinant();
     ASSERT_EQ(det_correct, det) << "Test failed";
 }

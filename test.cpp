@@ -1,4 +1,5 @@
 #include <random>
+#include <stdexcept>
 #include "MyMatrix.hpp"
 
 int main(){
@@ -64,7 +65,7 @@ int main(){
         }
 
         for (size_t i = 0; i < 99; i++) {
-            for(size_t j = 0; i < 99; j++) {
+            for(size_t j = 0; j < 99; j++) {
                 matrix1[i + 1][j] = matrix1[i + 1][j] + matrix1[i][j];
             }
         }
@@ -75,7 +76,7 @@ int main(){
             }
         }
 
-        double det1 = matrix1.determinant(matrix1) ;
+        double det1 = matrix1.determinant() ;
         if (det_correct1 == 0){
             if (det1 == 0){
                 std::cout << "Test" << " " << kol << " " << "passed" << std::endl;
@@ -132,7 +133,7 @@ int main(){
             }
         }
 
-        double det2 = matrix2.determinant(matrix2) ;
+        double det2 = matrix2.determinant() ;
         if (det_correct2 == 0){
             if (det2 == 0){
                 std::cout << "Test" << " " << kol << " " << "passed" << std::endl;
@@ -155,5 +156,45 @@ int main(){
 
             }
         }
+    }
+
+    std::cout << std::endl << "exeptions tests: " << std::endl;
+
+    MyMatrix<double> matrix1(3, 5);
+    MyMatrix<double> matrix2(6, 9);
+    try {
+        MyMatrix<double> result = matrix1 + matrix2;
+    } catch (const std::runtime_error &e) {
+        std::cerr << "Exception caught: " << e.what() << std::endl;
+    }
+
+    try {
+        MyMatrix<double> result = matrix1 - matrix2;
+    } catch (const std::runtime_error &e) {
+        std::cerr << "Exception caught: " << e.what() << std::endl;
+    }
+
+    try {
+        MyMatrix<double> result = matrix1 * matrix2;
+    } catch (const std::runtime_error &e) {
+        std::cerr << "Exception caught: " << e.what() << std::endl;
+    }
+
+    try {
+        MyMatrix<double> result = matrix2 * matrix1;
+    } catch (const std::runtime_error &e) {
+        std::cerr << "Exception caught: " << e.what() << std::endl;
+    }
+
+    try {
+        double det = matrix2.determinant();
+    } catch (const std::runtime_error &e) {
+        std::cerr << "Exception caught: " << e.what() << std::endl;
+    }
+
+    try {
+        double det = matrix1.determinant();
+    } catch (const std::runtime_error &e) {
+        std::cerr << "Exception caught: " << e.what() << std::endl;
     }
 }
