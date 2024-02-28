@@ -52,7 +52,7 @@ protected:
         rhs.used = 0;
     }
 
-    MyMatrixBuff&&operator= (MyMatrixBuff&& rhs) noexcept{
+    MyMatrixBuff&operator= (MyMatrixBuff&& rhs) noexcept{
         std::swap(arr, rhs.arr);
         std::swap(m, rhs.m);
         std::swap(n, rhs.n);
