@@ -1,3 +1,4 @@
+# MyMatrix
 This project implements a template class - a matrix. 
 Memory management occurs in accordance with the rule of five. 
 This class is also designed with strict exception safety guarantees. 
